@@ -4,14 +4,18 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.gostoudaaula.R;
+import br.com.gostoudaaula.client.AlunoClient;
 import br.com.gostoudaaula.helper.QuestoesHelper;
 import br.com.gostoudaaula.model.Questoes;
 import br.com.gostoudaaula.model.Respostas;
+import br.com.gostoudaaula.task.TesteTask;
 
 public class QuestoesActivity extends AppCompatActivity {
 
@@ -42,6 +46,7 @@ public class QuestoesActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 helper.setResposta();
+                new TesteTask(QuestoesActivity.this).execute();
             }
         });
     }
