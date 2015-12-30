@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Gostou da aula</string>
+    <string name="prontuario">Prontuário</string>
+    <string name="senha">Senha</string>
+    <string name="login">Login</string>
+    <string name="sign_up">Cadastre-se aqui</string>
+    <string name="nome">Nome</string>
+    <string name="sobrenome">Sobrenome</string>
+    <string name="responder">responder</string>
+</resources>
