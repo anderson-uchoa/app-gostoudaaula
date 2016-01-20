@@ -13,15 +13,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <RadioGroup
-            android:id="@+id/questoes_alternativas"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <RatingBar
+            android:id="@+id/questoes_resposta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:max="10"
+            android:numStars="5" />
 
-
-        </RadioGroup>
-
-        <Button android:id="@+id/questoes_responder"
+        <Button
+            android:id="@+id/questoes_responder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

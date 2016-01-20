@@ -3,7 +3,7 @@ package br.com.gostoudaaula.helper;
 import android.widget.EditText;
 
 import br.com.gostoudaaula.R;
-import br.com.gostoudaaula.activity.LoginActivity;
+import br.com.gostoudaaula.activity.LoginAlunoActivity;
 import br.com.gostoudaaula.model.Aluno;
 
 /**
@@ -15,7 +15,7 @@ public class LoginHelper {
     private final EditText prontuario;
     private final EditText senha;
 
-    public LoginHelper(LoginActivity act) {
+    public LoginHelper(LoginAlunoActivity act) {
         this.prontuario = (EditText)act.findViewById(R.id.login_prontuario);
         this.senha = (EditText)act.findViewById(R.id.login_senha);
     }
