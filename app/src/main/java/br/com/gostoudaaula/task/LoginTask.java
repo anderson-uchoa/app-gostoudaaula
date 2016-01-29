@@ -3,6 +3,7 @@ package br.com.gostoudaaula.task;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -35,8 +36,10 @@ public class LoginTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
 
+
         try {
             this.aluno = new ObjectMapper().readValue(new AlunoClient().login(this.aluno), Aluno.class);
+            Log.i("aluno serializado: ", String.valueOf(aluno.getProntuario()));
         } catch (Exception e) {
             this.erro = e;
         }

@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import br.com.gostoudaaula.R;
 import br.com.gostoudaaula.adapter.ListaAulasAdapter;
@@ -28,7 +27,7 @@ public class ListaAulaActivity extends AppCompatActivity implements AulasDoAluno
         Aluno aluno = null;
 
         if (getIntent().hasExtra("aluno")) {
-            aluno = (Aluno) getIntent().getSerializableExtra("aluno");
+            aluno = (Aluno) getIntent().getParcelableExtra("aluno");
         } else {
             finish();
         }

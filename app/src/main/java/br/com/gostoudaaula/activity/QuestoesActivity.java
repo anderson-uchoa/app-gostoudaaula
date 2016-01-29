@@ -1,42 +1,48 @@
 package br.com.gostoudaaula.activity;
 
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
+
+import java.util.ArrayList;
 
 import br.com.gostoudaaula.R;
+import br.com.gostoudaaula.example.AvaliacaoExample;
+import br.com.gostoudaaula.fragment.QuestoesFragment;
 import br.com.gostoudaaula.helper.QuestoesHelper;
-import br.com.gostoudaaula.model.Questoes;
+import br.com.gostoudaaula.model.Avaliacao;
+import br.com.gostoudaaula.model.Respostas;
 
 public class QuestoesActivity extends AppCompatActivity {
 
     private QuestoesHelper helper;
-    private Button botao;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questoes);
-        this.helper = new QuestoesHelper(this);
-        this.botao = (Button) findViewById(R.id.questoes_responder);
 
-        Questoes questoes = new Questoes();
-        questoes.setDescricao("Questão de teste");
-        helper.inserePergunta(questoes);
 
-        helper.inserePergunta(questoes);
+        Bundle bundle = new Bundle();
+
+        Avaliacao avaliacao = new AvaliacaoExample().getFullExample1();
+
+        QuestoesFragment fragment = new QuestoesFragment();
+
+        bundle.putParcelable("avaliacao", avaliacao);
+        bundle.putInt("questao_atual", 0);
+        bundle.putParcelableArrayList("respostas", new ArrayList<Respostas>());
+
+        fragment.setArguments(bundle);
+
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.questoes_frame_layout, fragment);
+        ft.commit();
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        this.botao.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
     }
 }
 

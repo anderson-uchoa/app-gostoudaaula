@@ -3,6 +3,7 @@ package br.com.gostoudaaula.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -62,6 +63,7 @@ public class LoginAlunoActivity extends AppCompatActivity implements LoginAlunoD
 
     @Override
     public void carregaPaginaPrincipal(Aluno aluno) {
+        Log.i("aluno: ", String.valueOf(aluno));
         Intent intent = new Intent(this, ListaAulaActivity.class);
         intent.putExtra("aluno", aluno);
         startActivity(intent);
@@ -69,6 +71,7 @@ public class LoginAlunoActivity extends AppCompatActivity implements LoginAlunoD
 
     @Override
     public void trataErros(Exception e) {
+        e.printStackTrace();
         Toast.makeText(LoginAlunoActivity.this, "Problema de autentiçao", Toast.LENGTH_SHORT).show();
     }
 }

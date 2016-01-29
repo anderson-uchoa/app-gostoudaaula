@@ -6,8 +6,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import java.util.concurrent.ExecutionException;
-
 import br.com.gostoudaaula.R;
 import br.com.gostoudaaula.delegate.CadastroAlunoDelegate;
 import br.com.gostoudaaula.helper.CadastroHelper;

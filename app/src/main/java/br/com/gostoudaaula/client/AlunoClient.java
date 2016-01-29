@@ -1,7 +1,5 @@
 package br.com.gostoudaaula.client;
 
-import android.util.Log;
-
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
