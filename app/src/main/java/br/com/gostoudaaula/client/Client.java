@@ -27,7 +27,7 @@ public abstract class Client {
         return request;
     }
 
-    protected Request createRequestForGet(String url) {
+    protected Request createRequestForGET(String url) {
         Log.i("url get", url);
         return new Request.Builder().url(url).build();
     }

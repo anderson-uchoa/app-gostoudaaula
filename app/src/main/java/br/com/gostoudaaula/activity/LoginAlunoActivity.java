@@ -1,6 +1,7 @@
 package br.com.gostoudaaula.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -25,6 +26,9 @@ public class LoginAlunoActivity extends AppCompatActivity implements LoginAlunoD
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        SharedPreferences teste = getSharedPreferences("teste", 1);
+        Log.i("Shared preferences", String.valueOf(teste));
 
         this.helper = new LoginHelper(this);
         this.botaoLogin = (Button) findViewById(R.id.login_botao);
@@ -51,8 +55,6 @@ public class LoginAlunoActivity extends AppCompatActivity implements LoginAlunoD
                 startActivity(intent);
             }
         });
-
-
     }
 
     public void loga(Aluno aluno) {

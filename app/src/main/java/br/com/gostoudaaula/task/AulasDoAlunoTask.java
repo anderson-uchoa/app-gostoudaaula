@@ -25,11 +25,13 @@ public class AulasDoAlunoTask extends AsyncTask<Void, Void, List<Aula>> {
     private final Context ctx;
     private final AulasDoAlunoDelegate delegate;
     private ProgressDialog progress;
+    private boolean mostraProgress;
 
-    public AulasDoAlunoTask(AulasDoAlunoDelegate delegate, Aluno aluno, Context ctx) {
+    public AulasDoAlunoTask(AulasDoAlunoDelegate delegate, Aluno aluno, Context ctx, boolean mostraProgress) {
         this.aluno = aluno;
         this.ctx = ctx;
         this.delegate = delegate;
+        this.mostraProgress = mostraProgress;
     }
 
     @Override
@@ -51,7 +53,13 @@ public class AulasDoAlunoTask extends AsyncTask<Void, Void, List<Aula>> {
     @Override
     protected void onPostExecute(List<Aula> aulas) {
 
-        progress.dismiss();
+
+        if (mostraProgress) {
+            progress.dismiss();
+        } else {
+            delegate.encerraSwipe();
+        }
+
         if (!aulas.isEmpty()) {
             delegate.populaListaDeAulas(aulas);
         } else {
@@ -61,6 +69,9 @@ public class AulasDoAlunoTask extends AsyncTask<Void, Void, List<Aula>> {
 
     @Override
     protected void onPreExecute() {
-        this.progress = ProgressDialog.show(this.ctx, "Atualizando", "Verificando aulas disponíveis...", true);
+        if (mostraProgress) {
+            this.progress = ProgressDialog.show(this.ctx, "Atualizando", "Verificando aulas disponíveis...", true);
+
+        }
     }
 }

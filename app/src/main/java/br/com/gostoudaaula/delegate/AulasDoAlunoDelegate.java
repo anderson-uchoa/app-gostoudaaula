@@ -11,4 +11,5 @@ public interface AulasDoAlunoDelegate {
     public void populaListaDeAulas(List<Aula> aulas);
     public void trataErro(Exception e);
     public void alertSemAulas();
+    public void encerraSwipe();
 }

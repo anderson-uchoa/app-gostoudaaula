@@ -9,10 +9,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
 
 import br.com.gostoudaaula.R;
+import br.com.gostoudaaula.delegate.QuestoesDelegate;
 import br.com.gostoudaaula.model.Avaliacao;
 import br.com.gostoudaaula.model.Questoes;
 import br.com.gostoudaaula.model.Respostas;
@@ -22,12 +26,13 @@ import br.com.gostoudaaula.model.Respostas;
  */
 public class QuestoesFragment extends Fragment {
 
-    private Integer total;
-    private Integer questaoAtual;
+    private int total;
+    private int questaoAtual;
     private ArrayList<Questoes> questoes;
     private ArrayList<Respostas> respostas;
-    private Integer valueRating;
+    private int valueRating;
     private Avaliacao avaliacao;
+    private QuestoesDelegate delegate;
 
     private TextView pergunta;
     private RatingBar rating;
@@ -43,19 +48,21 @@ public class QuestoesFragment extends Fragment {
         this.questao = questoes.get(questaoAtual);
         this.respostas = bundle.getParcelableArrayList("respostas");
         this.valueRating = 0;
-        Log.i("chamada esse cara aqui", "agora");
+        if (respostas == null) {
+            respostas = new ArrayList<>();
+        } else if (respostas.size() == questaoAtual + 1) {
+            this.valueRating = respostas.get(questaoAtual).getResposta();
+        }
+
+        this.delegate = (QuestoesDelegate) getActivity();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
 
-        Log.i("chama o oncreateView", "agora");
+        setup(getArguments());
 
-        if (avaliacao == null)
-
-            if (avaliacao == null) {
-                setup(getArguments());
-            }
+        Log.i("tag atual no fragment", getTag());
 
         View view = inflater.inflate(R.layout.fragment_questoes, container, false);
 
@@ -70,17 +77,10 @@ public class QuestoesFragment extends Fragment {
                 Respostas respostaAtual = new Respostas();
                 respostaAtual.setResposta(valueRating);
                 respostaAtual.setQuestoes(questoes.get(questaoAtual));
-                respostaAtual.setAvaliacao(avaliacao);
+                respostaAtual.setData(LocalDate.now());
                 respostas.add(respostaAtual);
-
                 if (!proximaQuestao()) {
-
-                    Log.i("avaliacao: ", String.valueOf(avaliacao.getData()));
-                    Log.i("projeto: ", String.valueOf(avaliacao.getProjeto()));
-                    for (Respostas r : respostas) {
-                        Log.i("questao: ", r.getQuestoes().getDescricao());
-                        Log.i("resposta: ", String.valueOf(r.getResposta()));
-                    }
+                    delegate.enviaRespostas(respostas);
                 }
             }
         });
@@ -112,25 +112,11 @@ public class QuestoesFragment extends Fragment {
 
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        if (savedInstanceState != null) {
-            valueRating = savedInstanceState.getInt("value_rating");
-            questaoAtual = savedInstanceState.getInt("questao_atual");
-            questao = savedInstanceState.getParcelable("questao");
-            avaliacao = savedInstanceState.getParcelable("avaliacao");
-            Log.i("chama activity", questao.getDescricao());
-        }
-    }
-
-    @Override
     public void onSaveInstanceState(Bundle bundle) {
         super.onSaveInstanceState(bundle);
-        bundle.putParcelable("avaliacao", avaliacao);
-        bundle.putParcelable("questao", this.questao);
-        bundle.putInt("questao_atual", questaoAtual);
-        bundle.putInt("value_rating", valueRating);
+        this.delegate.mantemStatus(this.avaliacao, this.questaoAtual, this.respostas);
     }
+
 
 }
 

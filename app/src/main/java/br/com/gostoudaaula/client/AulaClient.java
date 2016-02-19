@@ -1,7 +1,5 @@
 package br.com.gostoudaaula.client;
 
-import android.util.Log;
-
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
@@ -15,7 +13,7 @@ import br.com.gostoudaaula.model.Aluno;
 public class AulaClient extends Client {
 
     public String getAulasSemAvaliacao(Aluno aluno) throws IOException {
-        Request request = createRequestForGet(URL + "aula/" +  aluno.getProntuario());
+        Request request = createRequestForGET(URL + "aula/" + aluno.getProntuario());
         Response response = client.newCall(request).execute();
 
         return response.body().string();
