@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -20,6 +19,7 @@ import br.com.gostoudaaula.model.Aluno;
 import br.com.gostoudaaula.model.Avaliacao;
 import br.com.gostoudaaula.model.Respostas;
 import br.com.gostoudaaula.task.RespostasTask;
+import butterknife.ButterKnife;
 
 public class QuestoesActivity extends AppCompatActivity implements QuestoesDelegate {
 
@@ -27,12 +27,13 @@ public class QuestoesActivity extends AppCompatActivity implements QuestoesDeleg
     private Avaliacao avaliacao;
     private ArrayList<Respostas> respostas;
     private Aluno aluno;
-    private android.app.Fragment fragment;
+    private Fragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_questoes);
+        setContentView(R.layout.activity_default_frame_layout);
+        ButterKnife.bind(this);
 
         Intent intent = getIntent();
 
@@ -70,7 +71,7 @@ public class QuestoesActivity extends AppCompatActivity implements QuestoesDeleg
     }
 
     private void carregaFragment(String TAG, FragmentTransaction ft, Fragment fragment) {
-        ft.replace(R.id.questoes_frame_layout, fragment, TAG);
+        ft.replace(R.id.activity_frame_layout_default, fragment, TAG);
         ft.commit();
     }
 

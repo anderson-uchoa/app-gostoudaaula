@@ -1,5 +1,7 @@
 package br.com.gostoudaaula.client;
 
+import android.util.Log;
+
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
@@ -19,15 +21,13 @@ public class AlunoClient extends Client {
         return response.body().string();
     }
 
-    public boolean cadastra(Aluno aluno) throws IOException {
-        Request request = createRequestForPOST(mapper.writeValueAsString(aluno), URL + "aluno");
+    public boolean cadastra(String json) throws IOException {
+        Request request = createRequestForPOST(json, URL + "aluno");
         Response response = client.newCall(request).execute();
 
+        Log.i("codigo da req", String.valueOf(response.code()));
         return response.isSuccessful();
-
     }
-
-
 
 
 }

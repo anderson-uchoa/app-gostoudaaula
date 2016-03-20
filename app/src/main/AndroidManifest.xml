@@ -6,21 +6,32 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/icone_splash"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.LoginAlunoActivity">
+        <activity
+            android:name=".activity.LoginActivity"
+            android:label="Login" />
+        <activity
+            android:name=".activity.CadastroActivity"
+            android:label="Cadastro" />
+        <activity
+            android:name=".activity.QuestoesActivity"
+            android:label="Questoes" />
+        <activity
+            android:name=".activity.ListaAulaActivity"
+            android:label="Avaliaçoes" />
+        <activity
+            android:name=".activity.ListaTurmasActivity"
+            android:label="Turmas" />
+        <activity android:name=".activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.CadastroActivity" />
-        <activity android:name=".activity.QuestoesActivity" />
-        <activity android:name=".activity.ListaAulaActivity"></activity>
-        <activity android:name=".activity.MainActivity"></activity>
     </application>
 
 </manifest>

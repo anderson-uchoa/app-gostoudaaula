@@ -3,7 +3,6 @@ package br.com.gostoudaaula.task;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -33,6 +32,7 @@ public class RespostasTask extends AsyncTask<Void, Void, Void> {
     private ProgressDialog progress;
     private Exception erro;
 
+
     public RespostasTask(QuestoesDelegate delegate, Avaliacao avaliacao,
                          List<Respostas> respostas, Aluno aluno, Context context) {
         this.delegate = delegate;
@@ -57,7 +57,7 @@ public class RespostasTask extends AsyncTask<Void, Void, Void> {
         try {
             String json = mapper.writeValueAsString(respostas);
             new RespostasClient().enviaRespostas(json, avaliacao.getId());
-            new AvaliacaoClient().avaliaAula(mapper.writeValueAsString(aula), aluno.getProntuario());
+            new AvaliacaoClient().avaliaAula(mapper.writeValueAsString(avaliacao), aluno.getId());
         } catch (IOException e) {
             erro = e;
         }

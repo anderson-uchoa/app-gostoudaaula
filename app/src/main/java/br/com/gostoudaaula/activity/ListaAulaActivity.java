@@ -5,59 +5,53 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import br.com.gostoudaaula.R;
 import br.com.gostoudaaula.adapter.ListaAulasAdapter;
 import br.com.gostoudaaula.delegate.AulasDoAlunoDelegate;
 import br.com.gostoudaaula.delegate.AvaliacaoDelegate;
-import br.com.gostoudaaula.helper.ListaAulaHelper;
 import br.com.gostoudaaula.model.Aluno;
 import br.com.gostoudaaula.model.Aula;
 import br.com.gostoudaaula.model.Avaliacao;
 import br.com.gostoudaaula.task.AulasDoAlunoTask;
 import br.com.gostoudaaula.task.AvaliacaoTask;
+import br.com.gostoudaaula.utils.AlunoUtils;
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnItemClick;
 
 public class ListaAulaActivity extends AppCompatActivity implements AulasDoAlunoDelegate, AvaliacaoDelegate {
 
-    private ListaAulaHelper helper;
-    private ListView listaDeAulas;
-    private Avaliacao avaliacao;
+    @Bind(R.id.lista_aula_swipe)
+    SwipeRefreshLayout swipe;
+    @Bind(R.id.lista_aula_aulas)
+    ListView listaDeAulas;
     private Aluno aluno;
-
+    private Avaliacao avaliacao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_aula);
-
-        this.helper = new ListaAulaHelper(this);
-        this.listaDeAulas = helper.listaDeAulas();
-
+        ButterKnife.bind(this);
 
         if (getIntent().hasExtra("aluno")) {
-            this.aluno = (Aluno) getIntent().getParcelableExtra("aluno");
+            aluno = (Aluno) getIntent().getParcelableExtra("aluno");
         } else {
             finish();
         }
 
+        Log.i("id do aluno", String.valueOf(aluno.getId()));
         new AulasDoAlunoTask(this, aluno, this, true).execute();
 
-        listaDeAulas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Aula aula = (Aula) parent.getItemAtPosition(position);
-                new AvaliacaoTask(ListaAulaActivity.this, aula, ListaAulaActivity.this).execute();
-            }
-        });
-
-        this.helper.getSwipe().setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 new AulasDoAlunoTask(ListaAulaActivity.this, aluno, ListaAulaActivity.this, false).execute();
@@ -65,10 +59,42 @@ public class ListaAulaActivity extends AppCompatActivity implements AulasDoAluno
         });
     }
 
+    @OnItemClick(R.id.lista_aula_aulas)
+    public void avaliaAula(int position) {
+        Aula aula = (Aula) listaDeAulas.getItemAtPosition(position);
+        new AvaliacaoTask(ListaAulaActivity.this, aula, ListaAulaActivity.this).execute();
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_lista_aulas, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.menu_lista_aula_logout:
+                desloga();
+                Intent intent = new Intent(this, SplashActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void desloga() {
+        getSharedPreferences(AlunoUtils.ALUNO_PREFERENCES, MODE_PRIVATE).edit().remove(AlunoUtils.ALUNO_TOKEN_APP).commit();
+    }
+
     @Override
     public void populaListaDeAulas(List<Aula> aulas) {
         ListaAulasAdapter adapter = new ListaAulasAdapter(this, aulas);
-        helper.getLista().setAdapter(adapter);
+        listaDeAulas.setAdapter(adapter);
     }
 
     @Override
@@ -79,8 +105,6 @@ public class ListaAulaActivity extends AppCompatActivity implements AulasDoAluno
         startActivity(intent);
         finish();
     }
-
-
 
     @Override
     public void trataErro(Exception e) {
@@ -95,11 +119,9 @@ public class ListaAulaActivity extends AppCompatActivity implements AulasDoAluno
 
     @Override
     public void encerraSwipe() {
-        finalizaSwipe();
+        this.swipe.setRefreshing(false);
+        this.swipe.clearAnimation();
     }
 
-    public void finalizaSwipe(){
-        this.helper.finalizaSwipe();
-    }
 
 }

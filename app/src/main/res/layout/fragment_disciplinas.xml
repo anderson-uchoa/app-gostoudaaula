@@ -4,10 +4,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <FrameLayout
-        android:id="@+id/questoes_frame_layout"
+    <ListView
+        android:id="@+id/fragment_disciplinas_lista"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </FrameLayout>
+        android:layout_height="wrap_content"></ListView>
 
 </LinearLayout>

@@ -24,9 +24,8 @@ public class AvaliacaoClient extends Client {
         return response.body().string();
     }
 
-    public String avaliaAula(String json, Integer prontuario) throws IOException {
-        Log.i("aula avaliada", json);
-        Request request = createRequestForPOST(json, URL + "avaliacao/respondida/" + prontuario);
+    public String avaliaAula(String json, Long id) throws IOException {
+        Request request = createRequestForPOST(json, URL + "avaliacao/respondida/" + id);
         Response response = client.newCall(request).execute();
         return response.body().string();
     }

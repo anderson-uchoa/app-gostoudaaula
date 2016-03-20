@@ -23,15 +23,6 @@
         android:hint="@string/sobrenome" />
 
     <EditText
-        android:id="@+id/cadastro_prontuario"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"
-        android:hint="@string/prontuario" />
-
-    <EditText
         android:id="@+id/cadastro_senha"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

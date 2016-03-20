@@ -7,7 +7,8 @@ import br.com.gostoudaaula.model.Aluno;
  */
 public interface LoginAlunoDelegate {
 
-    public void carregaPaginaPrincipal(Aluno aluno);
+    public void carregaAulasDoAluno(Aluno aluno);
+
     public void trataErros(Exception e);
 
 }

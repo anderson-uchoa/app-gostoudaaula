@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.joda.time.LocalDate;
 
@@ -62,8 +61,6 @@ public class QuestoesFragment extends Fragment {
 
         setup(getArguments());
 
-        Log.i("tag atual no fragment", getTag());
-
         View view = inflater.inflate(R.layout.fragment_questoes, container, false);
 
         carregaViews(view);
@@ -93,6 +90,7 @@ public class QuestoesFragment extends Fragment {
         quantidade.setText(this.questaoAtual + 1 + " de " + total);
     }
 
+    // TODO: 16/03/16 mudar para ButterKnife
     private void carregaViews(View view) {
         this.quantidade = (TextView) view.findViewById(R.id.questoes_quantidade);
         this.pergunta = (TextView) view.findViewById(R.id.questoes_pergunta);

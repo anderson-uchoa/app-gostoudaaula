@@ -2,6 +2,9 @@ package br.com.gostoudaaula.task;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 
@@ -27,8 +30,12 @@ public class CadastroTask extends AsyncTask<Void, Void, Boolean> {
 
     @Override
     protected Boolean doInBackground(Void... params) {
+
+
         try {
-            return new AlunoClient().cadastra(aluno);
+            ObjectMapper mapper = new ObjectMapper();
+            String json = mapper.writeValueAsString(aluno);
+            return new AlunoClient().cadastra(json);
         } catch (IOException e) {
             this.erro = e;
         }
@@ -39,9 +46,9 @@ public class CadastroTask extends AsyncTask<Void, Void, Boolean> {
     @Override
     protected void onPostExecute(Boolean confirmacao) {
 
-        if(confirmacao){
+        if (confirmacao) {
             delegate.confirmacaoDeCadastrado();
-        } else{
+        } else {
             delegate.trataErro(erro);
         }
 

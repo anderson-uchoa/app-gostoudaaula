@@ -4,25 +4,30 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import br.com.gostoudaaula.R;
 import br.com.gostoudaaula.delegate.CadastroAlunoDelegate;
-import br.com.gostoudaaula.helper.CadastroHelper;
 import br.com.gostoudaaula.model.Aluno;
 import br.com.gostoudaaula.task.CadastroTask;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class CadastroActivity extends AppCompatActivity implements CadastroAlunoDelegate {
 
-    private CadastroHelper helper;
+    @Bind(R.id.cadastro_nome)
+    EditText nome;
+    @Bind(R.id.cadastro_sobrenome)
+    EditText sobrenome;
+    @Bind(R.id.cadastro_senha)
+    EditText senha;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
-
-        helper = new CadastroHelper(this);
-
+        ButterKnife.bind(this);
     }
 
     @Override
@@ -36,13 +41,21 @@ public class CadastroActivity extends AppCompatActivity implements CadastroAluno
 
         switch (item.getItemId()) {
             case R.id.menu_done:
-                Aluno aluno = helper.constroi();
+                Aluno aluno = constroi();
 
                 new CadastroTask(CadastroActivity.this, aluno, CadastroActivity.this).execute();
 
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private Aluno constroi() {
+        Aluno aluno = new Aluno();
+        aluno.setNome(String.valueOf(nome.getText()));
+        aluno.setSobrenome(String.valueOf(sobrenome.getText()));
+        aluno.setSenha(String.valueOf(senha.getText()));
+        return aluno;
     }
 
     @Override

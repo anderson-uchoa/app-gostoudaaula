@@ -8,4 +8,5 @@
     <string name="sobrenome">Sobrenome</string>
     <string name="responder">responder</string>
     <string name="numeros">1234567890</string>
+    <string name="logout">Sair</string>
 </resources>

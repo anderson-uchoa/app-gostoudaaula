@@ -13,9 +13,8 @@ import br.com.gostoudaaula.model.Aluno;
 public class AulaClient extends Client {
 
     public String getAulasSemAvaliacao(Aluno aluno) throws IOException {
-        Request request = createRequestForGET(URL + "aula/" + aluno.getProntuario());
+        Request request = createRequestForGET(URL + "aula/" + aluno.getId());
         Response response = client.newCall(request).execute();
-
         return response.body().string();
     }
 }
