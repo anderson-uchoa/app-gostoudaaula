@@ -4,6 +4,11 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
+
+import br.com.gostoudaaula.client.ProfessorClient;
 import br.com.gostoudaaula.delegate.LoginProfessorDelegate;
 import br.com.gostoudaaula.model.Professor;
 
@@ -24,7 +29,6 @@ public class LoginProfessorTask extends AsyncTask<Void, Void, Professor> {
         this.delegate = delegate;
     }
 
-
     @Override
     protected void onPreExecute() {
         this.progress = ProgressDialog.show(ctx, "Autenticação", "Aguarde enquanto verificamos...", true);
@@ -33,21 +37,30 @@ public class LoginProfessorTask extends AsyncTask<Void, Void, Professor> {
     @Override
     protected Professor doInBackground(Void... params) {
 
+        Professor professor = null;
 
+        ObjectMapper mapper = new ObjectMapper();
 
-        return null;
+        try {
+            professor = mapper.readValue(new ProfessorClient().login(professor), Professor.class);
+        } catch (IOException e) {
+            this.erro = e;
+            e.printStackTrace();
+        }
+
+        return professor;
     }
 
     @Override
     protected void onPostExecute(Professor professor) {
 
-        progress.dismiss();
 
         if (this.erro != null) {
             this.delegate.trataErros(erro);
         } else {
             this.delegate.carregaTurmasDoProfesor(professor);
         }
+        progress.dismiss();
     }
 
 

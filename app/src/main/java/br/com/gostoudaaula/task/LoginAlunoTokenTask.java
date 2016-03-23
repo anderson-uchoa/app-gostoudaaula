@@ -12,15 +12,14 @@ import br.com.gostoudaaula.model.Aluno;
 /**
  * Created by alexf on 21/02/16.
  */
-public class LoginTokenTask extends AsyncTask<Void, Void, Aluno> {
+public class LoginAlunoTokenTask extends AsyncTask<Void, Void, Aluno> {
 
 
     private final LoginAlunoDelegate delegate;
     private final String token;
-    private ProgressDialog progress;
     private Exception erro;
 
-    public LoginTokenTask(LoginAlunoDelegate delegate, String token) {
+    public LoginAlunoTokenTask(LoginAlunoDelegate delegate, String token) {
         this.delegate = delegate;
         this.token = token;
     }
@@ -34,7 +33,7 @@ public class LoginTokenTask extends AsyncTask<Void, Void, Aluno> {
         try {
             ObjectMapper mapper = new ObjectMapper();
             String json = mapper.writeValueAsString(aluno);
-            aluno = mapper.readValue(new TokenClient().autentica(json), Aluno.class);
+            aluno = mapper.readValue(new TokenClient().autenticaAluno(json), Aluno.class);
         } catch (Exception e) {
             this.erro = e;
             e.printStackTrace();

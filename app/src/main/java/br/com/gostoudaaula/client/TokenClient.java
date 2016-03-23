@@ -10,10 +10,16 @@ import java.io.IOException;
  */
 public class TokenClient extends Client {
 
-    public String autentica(String json) throws IOException {
-
-        Request request = createRequestForPOST(json, URL + "/aluno/auth/token");
+    public String autenticaAluno(String json) throws IOException {
+        Request request = createRequestForPOST(json, URL + "aluno/auth/token");
         Response response = client.newCall(request).execute();
         return response.body().string();
     }
+
+    public String autenticaProfesso(String json) throws IOException {
+        Request request = createRequestForPOST(json, URL + "professor/auth/token");
+        Response response = client.newCall(request).execute();
+        return response.body().string();
+    }
+
 }

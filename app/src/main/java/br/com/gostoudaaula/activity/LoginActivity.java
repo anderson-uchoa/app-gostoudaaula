@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -22,6 +21,9 @@ import butterknife.OnClick;
 
 import static br.com.gostoudaaula.utils.AlunoUtils.ALUNO_PREFERENCES;
 import static br.com.gostoudaaula.utils.AlunoUtils.ALUNO_TOKEN_APP;
+import static br.com.gostoudaaula.utils.ProfessorUtils.PROFESSOR_PREFENCES;
+import static br.com.gostoudaaula.utils.ProfessorUtils.PROFESSOR_TOKEN_APP;
+
 
 public class LoginActivity extends AppCompatActivity implements LoginAlunoDelegate, LoginProfessorDelegate {
 
@@ -83,7 +85,9 @@ public class LoginActivity extends AppCompatActivity implements LoginAlunoDelega
     }
 
     private void armazenaTokenDoProfessor(Professor professor) {
-        Log.i("token professor", "token inserido");
+        SharedPreferences preferences = getSharedPreferences(PROFESSOR_PREFENCES, MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(PROFESSOR_TOKEN_APP, professor.getToken()).commit();
     }
 
     private Aluno constroiAluno() {

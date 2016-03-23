@@ -22,7 +22,7 @@ import br.com.gostoudaaula.model.Aula;
 import br.com.gostoudaaula.model.Avaliacao;
 import br.com.gostoudaaula.task.AulasDoAlunoTask;
 import br.com.gostoudaaula.task.AvaliacaoTask;
-import br.com.gostoudaaula.utils.AlunoUtils;
+import br.com.gostoudaaula.utils.TokenUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnItemClick;
@@ -78,17 +78,13 @@ public class ListaAulaActivity extends AppCompatActivity implements AulasDoAluno
 
         switch (item.getItemId()) {
             case R.id.menu_lista_aula_logout:
-                desloga();
+                new TokenUtils(this).deslogaAluno();
                 Intent intent = new Intent(this, SplashActivity.class);
                 startActivity(intent);
                 finish();
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void desloga() {
-        getSharedPreferences(AlunoUtils.ALUNO_PREFERENCES, MODE_PRIVATE).edit().remove(AlunoUtils.ALUNO_TOKEN_APP).commit();
     }
 
     @Override
