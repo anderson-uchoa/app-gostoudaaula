@@ -59,7 +59,7 @@ public class CadastroActivity extends AppCompatActivity implements CadastroAluno
     }
 
     @Override
-    public void trataErro(Exception e) {
+    public void lidaComErro(Exception e) {
         e.printStackTrace();
         Toast.makeText(CadastroActivity.this, "Cadastro ja existe", Toast.LENGTH_SHORT).show();
     }

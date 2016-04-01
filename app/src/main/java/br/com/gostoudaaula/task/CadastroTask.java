@@ -2,7 +2,6 @@ package br.com.gostoudaaula.task;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -49,7 +48,7 @@ public class CadastroTask extends AsyncTask<Void, Void, Boolean> {
         if (confirmacao) {
             delegate.confirmacaoDeCadastrado();
         } else {
-            delegate.trataErro(erro);
+            delegate.lidaComErro(erro);
         }
 
     }

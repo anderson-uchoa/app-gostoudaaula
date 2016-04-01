@@ -1,6 +1,5 @@
 package br.com.gostoudaaula.task;
 
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -48,7 +47,7 @@ public class LoginAlunoTokenTask extends AsyncTask<Void, Void, Aluno> {
     @Override
     protected void onPostExecute(Aluno aluno) {
         if (erro != null) {
-            delegate.trataErros(erro);
+            delegate.lidaComErro(erro);
         } else {
             delegate.carregaAulasDoAluno(aluno);
         }

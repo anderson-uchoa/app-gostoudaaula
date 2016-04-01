@@ -27,7 +27,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnItemClick;
 
-public class ListaAulaActivity extends AppCompatActivity implements AulasDoAlunoDelegate, AvaliacaoDelegate {
+public class AlunoMainActivity extends AppCompatActivity implements AulasDoAlunoDelegate, AvaliacaoDelegate {
 
     @Bind(R.id.lista_aula_swipe)
     SwipeRefreshLayout swipe;
@@ -54,7 +54,7 @@ public class ListaAulaActivity extends AppCompatActivity implements AulasDoAluno
         swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new AulasDoAlunoTask(ListaAulaActivity.this, aluno, ListaAulaActivity.this, false).execute();
+                new AulasDoAlunoTask(AlunoMainActivity.this, aluno, AlunoMainActivity.this, false).execute();
             }
         });
     }
@@ -62,7 +62,7 @@ public class ListaAulaActivity extends AppCompatActivity implements AulasDoAluno
     @OnItemClick(R.id.lista_aula_aulas)
     public void avaliaAula(int position) {
         Aula aula = (Aula) listaDeAulas.getItemAtPosition(position);
-        new AvaliacaoTask(ListaAulaActivity.this, aula, ListaAulaActivity.this).execute();
+        new AvaliacaoTask(AlunoMainActivity.this, aula, AlunoMainActivity.this).execute();
     }
 
 
@@ -95,7 +95,7 @@ public class ListaAulaActivity extends AppCompatActivity implements AulasDoAluno
 
     @Override
     public void lidaComAvaliacao(Avaliacao avaliacao) {
-        Intent intent = new Intent(ListaAulaActivity.this, QuestoesActivity.class);
+        Intent intent = new Intent(AlunoMainActivity.this, QuestoesActivity.class);
         intent.putExtra("avaliacao", avaliacao);
         intent.putExtra("aluno", aluno);
         startActivity(intent);
@@ -103,14 +103,14 @@ public class ListaAulaActivity extends AppCompatActivity implements AulasDoAluno
     }
 
     @Override
-    public void trataErro(Exception e) {
+    public void lidaComErro(Exception e) {
         e.printStackTrace();
-        Toast.makeText(ListaAulaActivity.this, "Erro ao carregar as aulas", Toast.LENGTH_SHORT).show();
+        Toast.makeText(AlunoMainActivity.this, "Erro ao carregar as aulas", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void alertSemAulas() {
-        Toast.makeText(ListaAulaActivity.this, "Nao ha aulas para serem avaliadas", Toast.LENGTH_SHORT).show();
+        Toast.makeText(AlunoMainActivity.this, "Nao ha aulas para serem avaliadas", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -118,6 +118,7 @@ public class ListaAulaActivity extends AppCompatActivity implements AulasDoAluno
         this.swipe.setRefreshing(false);
         this.swipe.clearAnimation();
     }
+
 
 
 }

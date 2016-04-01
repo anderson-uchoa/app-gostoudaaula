@@ -7,6 +7,7 @@ import br.com.gostoudaaula.model.Avaliacao;
  */
 public interface AvaliacaoDelegate {
 
-    public void lidaComAvaliacao(Avaliacao avaliacao);
-    public void trataErro(Exception erro);
+    public void lidaComAvaliacao(Avaliacao avaliacoes);
+
+    public void lidaComErro(Exception erro);
 }

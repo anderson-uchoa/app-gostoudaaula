@@ -42,7 +42,7 @@ public class LoginProfessorTask extends AsyncTask<Void, Void, Professor> {
         ObjectMapper mapper = new ObjectMapper();
 
         try {
-            professor = mapper.readValue(new ProfessorClient().login(professor), Professor.class);
+            professor = mapper.readValue(new ProfessorClient().login(this.professor), Professor.class);
         } catch (IOException e) {
             this.erro = e;
             e.printStackTrace();
@@ -56,7 +56,7 @@ public class LoginProfessorTask extends AsyncTask<Void, Void, Professor> {
 
 
         if (this.erro != null) {
-            this.delegate.trataErros(erro);
+            this.delegate.lidaComErro(erro);
         } else {
             this.delegate.carregaTurmasDoProfesor(professor);
         }

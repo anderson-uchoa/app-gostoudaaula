@@ -5,7 +5,7 @@ package br.com.gostoudaaula.delegate;
  */
 public interface CadastroAlunoDelegate {
 
-    public void trataErro(Exception e);
+    public void lidaComErro(Exception e);
     public void confirmacaoDeCadastrado();
 
 }

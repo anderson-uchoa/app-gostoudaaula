@@ -59,7 +59,7 @@ public class SplashActivity extends AppCompatActivity implements LoginAlunoDeleg
     }
 
     @Override
-    public void trataErros(Exception e) {
+    public void lidaComErro(Exception e) {
         e.printStackTrace();
         carregaPaginaLogin();
     }
@@ -67,7 +67,7 @@ public class SplashActivity extends AppCompatActivity implements LoginAlunoDeleg
     @Override
     public void carregaTurmasDoProfesor(Professor professor) {
         new TokenUtils(this).armazenaToken(professor);
-        Intent intent = new Intent(this, ListaTurmasActivity.class);
+        Intent intent = new Intent(this, ProfessorMainActivity.class);
         intent.putExtra("professor", professor);
         startActivity(intent);
         finish();
@@ -76,7 +76,7 @@ public class SplashActivity extends AppCompatActivity implements LoginAlunoDeleg
     @Override
     public void carregaAulasDoAluno(Aluno aluno) {
         new TokenUtils(this).armazenaToken(aluno);
-        Intent intent = new Intent(this, ListaAulaActivity.class);
+        Intent intent = new Intent(this, AlunoMainActivity.class);
         intent.putExtra("aluno", aluno);
         startActivity(intent);
         finish();

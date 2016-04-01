@@ -6,8 +6,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import org.joda.time.LocalDate;
-
 import java.util.List;
 
 import br.com.gostoudaaula.R;
@@ -56,7 +54,7 @@ public class ListaAvaliacoesAdapter extends BaseAdapter {
         Avaliacao avaliacao = getItem(position);
 
         titulo.setText(avaliacao.getAula().getPeriodoLetivo().getDisciplina().getDescricao());
-        data.setText(LocalDate.now().toString());
+        data.setText(avaliacao.getData().toString("dd/MM/YYYY"));
 
         return convertView;
     }

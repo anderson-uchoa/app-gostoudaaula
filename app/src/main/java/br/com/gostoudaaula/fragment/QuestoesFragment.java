@@ -19,12 +19,23 @@ import br.com.gostoudaaula.delegate.QuestoesDelegate;
 import br.com.gostoudaaula.model.Avaliacao;
 import br.com.gostoudaaula.model.Questoes;
 import br.com.gostoudaaula.model.Respostas;
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by alexf on 25/01/16.
  */
 public class QuestoesFragment extends Fragment {
 
+    @Bind(R.id.questoes_pergunta)
+    TextView pergunta;
+    @Bind(R.id.questoes_resposta)
+    RatingBar rating;
+    @Bind(R.id.questoes_botao_responder)
+    Button button;
+    @Bind(R.id.questoes_quantidade)
+    TextView quantidade;
     private int total;
     private int questaoAtual;
     private ArrayList<Questoes> questoes;
@@ -32,11 +43,6 @@ public class QuestoesFragment extends Fragment {
     private int valueRating;
     private Avaliacao avaliacao;
     private QuestoesDelegate delegate;
-
-    private TextView pergunta;
-    private RatingBar rating;
-    private Button button;
-    private TextView quantidade;
     private Questoes questao;
 
     private void setup(Bundle bundle) {
@@ -52,8 +58,8 @@ public class QuestoesFragment extends Fragment {
         } else if (respostas.size() == questaoAtual + 1) {
             this.valueRating = respostas.get(questaoAtual).getResposta();
         }
-
         this.delegate = (QuestoesDelegate) getActivity();
+        setTitle("Questões");
     }
 
     @Override
@@ -63,24 +69,9 @@ public class QuestoesFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_questoes, container, false);
 
-        carregaViews(view);
+        ButterKnife.bind(this, view);
 
         populaViews();
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                valueRating = rating.getProgress();
-                Respostas respostaAtual = new Respostas();
-                respostaAtual.setResposta(valueRating);
-                respostaAtual.setQuestoes(questoes.get(questaoAtual));
-                respostaAtual.setData(LocalDate.now());
-                respostas.add(respostaAtual);
-                if (!proximaQuestao()) {
-                    delegate.enviaRespostas(respostas);
-                }
-            }
-        });
 
         return view;
     }
@@ -90,31 +81,31 @@ public class QuestoesFragment extends Fragment {
         quantidade.setText(this.questaoAtual + 1 + " de " + total);
     }
 
-    // TODO: 16/03/16 mudar para ButterKnife
-    private void carregaViews(View view) {
-        this.quantidade = (TextView) view.findViewById(R.id.questoes_quantidade);
-        this.pergunta = (TextView) view.findViewById(R.id.questoes_pergunta);
-        this.rating = (RatingBar) view.findViewById(R.id.questoes_resposta);
-        this.button = (Button) view.findViewById(R.id.questoes_botao_responder);
+    private void proximaQuestao() {
+        this.delegate.proximaQuestao(this.avaliacao, this.respostas);
     }
 
-    private boolean proximaQuestao() {
-        if (++questaoAtual < total) {
-            questao = questoes.get(questaoAtual);
-            rating.setProgress(0);
-            populaViews();
-            return true;
-        }
-        return false;
+    @OnClick(R.id.questoes_botao_responder)
+    public void responde() {
+        insereResposta();
+        if (questaoAtual + 1 < total)
+            proximaQuestao();
+        else
+            delegate.enviaRespostas(respostas);
     }
 
-
-    @Override
-    public void onSaveInstanceState(Bundle bundle) {
-        super.onSaveInstanceState(bundle);
-        this.delegate.mantemStatus(this.avaliacao, this.questaoAtual, this.respostas);
+    private void insereResposta() {
+        valueRating = rating.getProgress();
+        Respostas respostaAtual = new Respostas();
+        respostaAtual.setResposta(valueRating);
+        respostaAtual.setQuestoes(questoes.get(questaoAtual));
+        respostaAtual.setData(LocalDate.now());
+        respostas.add(respostaAtual);
     }
 
+    private void setTitle(String title) {
+        getActivity().setTitle(title);
+    }
 
 }
 

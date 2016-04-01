@@ -9,7 +9,7 @@ import br.com.gostoudaaula.model.Aula;
  */
 public interface AulasDoAlunoDelegate {
     public void populaListaDeAulas(List<Aula> aulas);
-    public void trataErro(Exception e);
+    public void lidaComErro(Exception e);
     public void alertSemAulas();
     public void encerraSwipe();
 }

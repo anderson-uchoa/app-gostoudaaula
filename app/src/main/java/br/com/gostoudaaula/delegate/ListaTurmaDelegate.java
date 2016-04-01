@@ -8,7 +8,7 @@ import br.com.gostoudaaula.model.Turma;
 /**
  * Created by alexf on 22/03/16.
  */
-public interface TurmaDelegate {
+public interface ListaTurmaDelegate {
 
     public void lidaComTurmas(ArrayList<Turma> turmas);
 

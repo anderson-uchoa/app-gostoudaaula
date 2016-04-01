@@ -53,7 +53,7 @@ public class ListaAulasAdapter extends BaseAdapter {
 
         nomeAula.setText(aula.getPeriodoLetivo().getDisciplina().getDescricao().toString());
         nomeProfessor.setText(aula.getProfessor().getNome().toString());
-        data.setText(aula.getData().toString());
+        data.setText(aula.getData().toString("dd/MM/yyyy"));
 
         return convertView;
     }

@@ -5,7 +5,6 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
@@ -30,8 +29,6 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         super.onCreate(savedInstanceState);
         this.inicio = getArguments().getBoolean("inicio");
         this.fim = getArguments().getBoolean("fim");
-        Log.i("inicio", String.valueOf(inicio));
-        Log.i("fim", String.valueOf(fim));
     }
 
     @Override
@@ -46,13 +43,13 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
 
     @Override
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-        this.data = new LocalDate(year, monthOfYear, dayOfMonth);
+        this.data = new LocalDate(year, ++monthOfYear, dayOfMonth);
         if (inicio) {
             EditText inicio = (EditText) getActivity().findViewById(R.id.fragment_avaliacoes_inicio);
-            inicio.setText(data.toString());
+            inicio.setText(data.toString("dd/MM/yyyy"));
         } else if (fim) {
             EditText inicio = (EditText) getActivity().findViewById(R.id.fragment_avaliacoes_fim);
-            inicio.setText(data.toString());
+            inicio.setText(data.toString("dd/MM/yyyy"));
         }
     }
 

@@ -2,7 +2,6 @@ package br.com.gostoudaaula.fragment;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,11 @@ import java.util.List;
 
 import br.com.gostoudaaula.R;
 import br.com.gostoudaaula.adapter.ListaTurmasAdapter;
+import br.com.gostoudaaula.delegate.ListaDisciplinaDelegate;
+import br.com.gostoudaaula.model.PeriodoLetivo;
+import br.com.gostoudaaula.model.Professor;
 import br.com.gostoudaaula.model.Turma;
+import br.com.gostoudaaula.task.ListaDisciplinaTask;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnItemClick;
@@ -25,13 +28,19 @@ public class TurmasFragment extends Fragment {
     @Bind(R.id.fragment_turmas_lista)
     ListView listaDeTurmas;
     private List<Turma> turmas;
+    private ListaDisciplinaDelegate delegate;
+    private Professor professor;
+    private PeriodoLetivo periodo;
 
     private void setUp() {
         Bundle bundle = getArguments();
-        turmas = bundle.getParcelableArrayList("turmas");
+        this.turmas = bundle.getParcelableArrayList("turmas");
+        this.professor = bundle.getParcelable("professor");
+        periodo = new PeriodoLetivo();
+        this.delegate = (ListaDisciplinaDelegate) getActivity();
+        setTitle("Turmas");
     }
 
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setUp();
@@ -49,7 +58,15 @@ public class TurmasFragment extends Fragment {
 
     @OnItemClick(R.id.fragment_turmas_lista)
     public void carregaDisciplina(int position) {
+
         Turma turma = (Turma) listaDeTurmas.getItemAtPosition(position);
-        
+
+        periodo.setTurma(turma);
+
+        new ListaDisciplinaTask(delegate, periodo, professor, getActivity()).execute();
+    }
+
+    private void setTitle(String title) {
+        getActivity().setTitle(title);
     }
 }

@@ -72,12 +72,6 @@ public class LoginActivity extends AppCompatActivity implements LoginAlunoDelega
         return professor;
     }
 
-    @OnClick(R.id.login_cadastro)
-    protected void cadastro() {
-        Intent intent = new Intent(LoginActivity.this, CadastroActivity.class);
-        startActivity(intent);
-    }
-
     private void armazenaTokenDoAluno(Aluno aluno) {
         SharedPreferences preferences = getSharedPreferences(ALUNO_PREFERENCES, MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
@@ -100,7 +94,7 @@ public class LoginActivity extends AppCompatActivity implements LoginAlunoDelega
     @Override
     public void carregaAulasDoAluno(Aluno aluno) {
         armazenaTokenDoAluno(aluno);
-        Intent intent = new Intent(this, ListaAulaActivity.class);
+        Intent intent = new Intent(this, AlunoMainActivity.class);
         intent.putExtra("aluno", aluno);
         startActivity(intent);
         finish();
@@ -109,14 +103,14 @@ public class LoginActivity extends AppCompatActivity implements LoginAlunoDelega
     @Override
     public void carregaTurmasDoProfesor(Professor professor) {
         armazenaTokenDoProfessor(professor);
-        Intent intent = new Intent(this, ListaTurmasActivity.class);
+        Intent intent = new Intent(this, ProfessorMainActivity.class);
         intent.putExtra("professor", professor);
         startActivity(intent);
         finish();
     }
 
     @Override
-    public void trataErros(Exception e) {
+    public void lidaComErro(Exception e) {
         e.printStackTrace();
         Toast.makeText(this, "Problema de autentiçao", Toast.LENGTH_SHORT).show();
     }

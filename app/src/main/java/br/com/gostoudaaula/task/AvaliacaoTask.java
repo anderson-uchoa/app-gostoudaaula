@@ -3,7 +3,6 @@ package br.com.gostoudaaula.task;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -61,7 +60,7 @@ public class AvaliacaoTask extends AsyncTask<Void, Void, Avaliacao> {
         if (erro == null && avaliacao != null) {
             this.delegate.lidaComAvaliacao(avaliacao);
         } else {
-            this.delegate.trataErro(erro);
+            this.delegate.lidaComErro(erro);
         }
 
 

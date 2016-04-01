@@ -9,27 +9,26 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import br.com.gostoudaaula.client.ProfessorClient;
-import br.com.gostoudaaula.delegate.TurmaDelegate;
+import br.com.gostoudaaula.delegate.ListaTurmaDelegate;
 import br.com.gostoudaaula.model.Professor;
 import br.com.gostoudaaula.model.Turma;
 
 /**
  * Created by alexf on 22/03/16.
  */
-public class TurmaTask extends AsyncTask<Void, Void, ArrayList<Turma>> {
+public class ListaTurmaTask extends AsyncTask<Void, Void, ArrayList<Turma>> {
 
 
     private final Professor professor;
     private final Context ctx;
-    private TurmaDelegate delegate;
+    private ListaTurmaDelegate delegate;
     private ProgressDialog progress;
     private Exception erro;
 
 
-    public TurmaTask(TurmaDelegate delegate, Professor professor, Context ctx) {
+    public ListaTurmaTask(ListaTurmaDelegate delegate, Professor professor, Context ctx) {
         this.delegate = delegate;
         this.professor = professor;
         this.ctx = ctx;
@@ -43,10 +42,10 @@ public class TurmaTask extends AsyncTask<Void, Void, ArrayList<Turma>> {
 
     @Override
     protected ArrayList<Turma> doInBackground(Void... params) {
-        ArrayList<Turma> turmas = null;
+        ArrayList<Turma> turmas = new ArrayList<>();
         try {
             ObjectMapper mapper = new ObjectMapper();
-            turmas = mapper.readValue(new ProfessorClient().getTurmas(professor), new TypeReference<Turma>() {
+            turmas = mapper.readValue(new ProfessorClient().getTurmas(professor), new TypeReference<ArrayList<Turma>>() {
             });
         } catch (IOException e) {
             this.erro = e;

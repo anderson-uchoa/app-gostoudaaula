@@ -50,7 +50,7 @@ public class LoginProfessorTokenTask extends AsyncTask<Void, Void, Professor> {
     @Override
     protected void onPostExecute(Professor professor) {
         if (erro != null) {
-            delegate.trataErros(erro);
+            delegate.lidaComErro(erro);
         } else {
             delegate.carregaTurmasDoProfesor(professor);
         }

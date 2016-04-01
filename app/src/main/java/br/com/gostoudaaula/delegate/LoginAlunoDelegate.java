@@ -9,6 +9,6 @@ public interface LoginAlunoDelegate {
 
     public void carregaAulasDoAluno(Aluno aluno);
 
-    public void trataErros(Exception e);
+    public void lidaComErro(Exception e);
 
 }

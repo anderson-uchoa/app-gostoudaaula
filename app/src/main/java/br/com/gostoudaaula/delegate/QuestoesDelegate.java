@@ -11,11 +11,11 @@ import br.com.gostoudaaula.model.Respostas;
  */
 public interface QuestoesDelegate {
 
-    public void mantemStatus(Avaliacao avaliacao, int questaoAtual, ArrayList<Respostas> respostas);
-
     public void enviaRespostas(List<Respostas> respostas);
 
     public void lidaComErro(Exception erro);
 
     public void avaliacaoRespondida();
+
+    public void proximaQuestao(Avaliacao avaliacao, ArrayList<Respostas> respostas);
 }

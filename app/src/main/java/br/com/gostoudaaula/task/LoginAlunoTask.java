@@ -51,7 +51,7 @@ public class LoginAlunoTask extends AsyncTask<Void, Void, Aluno> {
         progress.dismiss();
 
         if (this.erro != null) {
-            this.delegate.trataErros(erro);
+            this.delegate.lidaComErro(erro);
         } else {
             this.delegate.carregaAulasDoAluno(aluno);
         }

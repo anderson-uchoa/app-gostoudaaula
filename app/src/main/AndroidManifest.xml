@@ -12,20 +12,27 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.LoginActivity"
-            android:label="Login" />
+            android:label="Login"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.CadastroActivity"
-            android:label="Cadastro" />
+            android:label="Cadastro"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.QuestoesActivity"
-            android:label="Questoes" />
+            android:label="Questões"
+            android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.ListaAulaActivity"
-            android:label="Avaliaçoes" />
+            android:name=".activity.AlunoMainActivity"
+            android:label="Aluno"
+            android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.ListaTurmasActivity"
-            android:label="Turmas" />
-        <activity android:name=".activity.SplashActivity">
+            android:name=".activity.ProfessorMainActivity"
+            android:label="Professor"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
